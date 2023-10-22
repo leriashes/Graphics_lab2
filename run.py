@@ -19,23 +19,47 @@ class SoftwareRender:
 		self.wind = Window(0, 0, 512)
 
 		self.figures = [
-			#Figure([[0, 0, 0], [5, 5, 0], [3, 0, 6]], 'green'),
-			#Figure([[150, 60, 30], [286, 45, 0], [53, 10, 6]], 'yellow'),
-			#Figure([[100, 103, 20], [100, 228, 20], [222, 228, 20], [222, 103, 20]], 'red'),
-			#Figure([[5, 212, 10], [5, 220, 10], [227, 220, 10], [227, 212, 20]], 'blue'),
-			#Figure([[215, 215, 25], [25, 25, 5], [30, 10,5]], 'black'),
-			#Figure([[100, 250, 25], [410, 25, 5], [380, 500,5]], 'green'),
+			Figure([[150, 60, 30], [286, 45, 0], [53, 10, 6]], 'yellow'),
+			Figure([[100, 103, 20], [100, 228, 20], [222, 228, 20], [282, 103, 20],  [202, 28, 20], [200, 103, 20]], 'red'),
+			Figure([[5, 212, 120], [5, 220, 120], [227, 220, 10], [227, 212, 10]], 'blue'),
+			Figure([[215, 215, 25], [25, 25, 5], [30, 10,5]], 'black'),
 			Figure([[160, 48, 20], [160, 448, 20], [352, 448, 20], [352, 48, 20]], 'orange'),
 			Figure([[80, 192, 10], [80, 320, 10], [432, 320, 10], [432, 192, 10]], 'purple'),
 			Figure([[240, 240, 25], [400, 400, 5], [480, 160, 5]], 'magenta'),
+			Figure([[4, -7, 0], [50, 270, 5], [280, 551, 27]], 'yellow')
+			#Figure([[4, -7, 0], [50, 270, 5], [280, 551, 27], [300, 300, 45], [380, 120, 48]], 'yellow'),
 			
-			Figure([[110, 40, 25], [510, 10, 5], [310, 100, 5], [100, 214, 25], [510, 400, 5], [240, 500, 5]], 'red'),
-			Figure([[10, 240, 25], [50, 100, 5], [320, 10, 5], [500, 24, 25], [510, 400, 5], [240, 500, 5]], 'lime')
+			#Figure([[110, 40, 25], [510, 10, 5], [310, 100, 5], [100, 214, 25], [510, 400, 5], [240, 500, 5]], 'red'),
+			#Figure([[10, 240, 25], [50, 100, 5], [320, 10, 5], [500, 24, 25], [510, 400, 5], [240, 500, 5]], 'lime')
 #			(10, 3, 20), (20, 28, 20), (22, 28, 20), (22, 3, 20)
 #2: (5, 12, 10), (5, 20, 10), (27, 20, !0), (27, 12, 20)
 #3: (15, 15, 25), (25, 25, 5), (30, 10,5)
 			]
 	   
+	def depth(self, ohvat, win):
+		ready  = True
+		zmin, zmax = ohvat[0].getZ(win)
+		n = 0
+
+		for i in range(1, len(ohvat)):
+			a, b = ohvat[i].getZ(win)
+			
+			if a > zmax:
+				n = i
+				zmax = b
+
+		if (win.size > 1):
+			for i in range(1, len(ohvat)):
+				a, b = ohvat[i].getZ(win)
+			
+				if b > zmax:
+					ready = False
+
+		if ready:
+			pg.draw.rect(self.screen, ohvat[n].color, win.proj())
+
+		return ready
+
 	def check_peresech(self, fig, win):
 		fc = []
 		peresech = False
@@ -250,9 +274,12 @@ class SoftwareRender:
 							else:
 								if n == len(self.figures) - 1 and len(ohvat) == 1:
 									pg.draw.rect(self.screen, ohvat[0].color, curr_wind.proj())
-						
-								if len(ohvat) != 0:
-									pg.draw.rect(self.screen, ohvat[0].color, curr_wind.proj())
+								elif len(ohvat) != 0:
+									if not self.depth(ohvat, curr_wind):
+										if (curr_wind.size > 1):
+											for wind in curr_wind.div():
+												pg.draw.rect(self.screen, (64, 128, 255), wind.proj(), 1)
+												self.windows.append(wind);
 
 							#pg.draw.rect(self.screen, peresech[0].color, curr_wind.proj())
 					else:
@@ -271,9 +298,13 @@ class SoftwareRender:
 						else:
 							if n == len(self.figures) - 1 and len(ohvat) == 1:
 								pg.draw.rect(self.screen, ohvat[0].color, curr_wind.proj())
-						
-							if len(ohvat) != 0:
-								pg.draw.rect(self.screen, ohvat[0].color, curr_wind.proj())
+							elif len(ohvat) != 0:
+								if not self.depth(ohvat, curr_wind):
+									if (curr_wind.size > 1):
+										for wind in curr_wind.div():
+											pg.draw.rect(self.screen, (64, 128, 255), wind.proj(), 1)
+											self.windows.append(wind);
+								#pg.draw.rect(self.screen, ohvat[0].color, curr_wind.proj())
 					
 
 
@@ -315,6 +346,9 @@ class SoftwareRender:
 			self.control();
 			[exit() for i in pg.event.get() if i.type == pg.QUIT]
 			pg.display.flip()
+			
+			#for figure in self.figures:
+			#	pg.draw.polygon(self.screen, 'black', figure.proj(), 1)
 
 
 if __name__ == '__main__':

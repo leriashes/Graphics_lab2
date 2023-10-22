@@ -1,7 +1,33 @@
+from window import *
+
 class Figure:
 	def __init__(self, vertexes, color):
 		self.vertexes = vertexes
 		self.color = color
+
+	def getZ(self, wind):
+		
+		coord = wind.coord()
+
+		d = - (self.vertexes[0][0] * (self.vertexes[1][1] * self.vertexes[2][2] - self.vertexes[2][1] * self.vertexes[1][2]) + self.vertexes[1][0] * (self.vertexes[2][1] * self.vertexes[0][2] - self.vertexes[0][1] * self.vertexes[2][2]) + self.vertexes[2][0] * (self.vertexes[0][1] * self.vertexes[1][2] - self.vertexes[1][1] * self.vertexes[0][2]))
+		a = self.vertexes[0][1] * (self.vertexes[1][2] - self.vertexes[2][2]) + self.vertexes[1][1] * (self.vertexes[2][2] - self.vertexes[0][2]) + self.vertexes[2][1] * (self.vertexes[0][2] - self.vertexes[1][2])
+		b = self.vertexes[0][2] * (self.vertexes[1][0] - self.vertexes[2][0]) + self.vertexes[1][2] * (self.vertexes[2][0] - self.vertexes[0][0]) + self.vertexes[2][2] * (self.vertexes[0][0] - self.vertexes[1][0])
+		c = self.vertexes[0][0] * (self.vertexes[1][1] - self.vertexes[2][1]) + self.vertexes[1][0] * (self.vertexes[2][1] - self.vertexes[0][1]) + self.vertexes[2][0] * (self.vertexes[0][1] - self.vertexes[1][1])
+		z = -(d + a * coord[0][0] + b * coord[0][1]) / c
+
+		mn = z
+		mx = z
+
+		for i in range(1, len(coord)):
+			z = -(d + a * coord[i][0] + b * coord[i][1]) / c
+
+			if z > mx:
+				mx = z
+
+			if z < mn:
+				mn = z
+
+		return mn, mx
 
 	def proj(self):
 		res = []
