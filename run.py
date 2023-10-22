@@ -27,7 +27,10 @@ class SoftwareRender:
 			#Figure([[100, 250, 25], [410, 25, 5], [380, 500,5]], 'green'),
 			Figure([[160, 48, 20], [160, 448, 20], [352, 448, 20], [352, 48, 20]], 'orange'),
 			Figure([[80, 192, 10], [80, 320, 10], [432, 320, 10], [432, 192, 10]], 'purple'),
-			Figure([[240, 240, 25], [400, 400, 5], [480, 160, 5]], 'magenta')
+			Figure([[240, 240, 25], [400, 400, 5], [480, 160, 5]], 'magenta'),
+			
+			Figure([[110, 40, 25], [510, 10, 5], [310, 100, 5], [100, 214, 25], [510, 400, 5], [240, 500, 5]], 'red'),
+			Figure([[10, 240, 25], [50, 100, 5], [320, 10, 5], [500, 24, 25], [510, 400, 5], [240, 500, 5]], 'lime')
 #			(10, 3, 20), (20, 28, 20), (22, 28, 20), (22, 3, 20)
 #2: (5, 12, 10), (5, 20, 10), (27, 20, !0), (27, 12, 20)
 #3: (15, 15, 25), (25, 25, 5), (30, 10,5)
@@ -42,27 +45,30 @@ class SoftwareRender:
 			fc.append([])
 			fc[i].append(fig.vertexes[i])
 			fc[i].append(fig.vertexes[(i + 1) % len(fig.vertexes)])
-
+			
 		i = 0
 		while i < len(fc) and peresech == False:
-			xr = fc[i][1][0] - fc[i][0][0]
-			yr = fc[i][1][1] - fc[i][0][1]
-			if xr == 0:
-				if (c[0][0] - fc[i][0][0]) * (c[1][0] - fc[i][0][0]) < 0:
-					peresech = True
-			elif yr == 0:
-				if (c[0][1] - fc[i][1][1]) * (c[2][1] - fc[i][1][1]) < 0:
-					peresech = True
-			else:
-				m = yr / xr
-				b = fc[i][1][1] - m * fc[i][1][0]
-				last = c[0][1] - m * c[0][0] - b
-				for j in range(1, 4):
-					n = c[j][1] - m * c[j][0] - b
-					if last * n < 0:
+
+			if not (fc[i][0][0] > c[2][0] and fc[i][1][0] > c[2][0] or fc[i][0][0] < c[0][0] and fc[i][1][0] < c[0][0] or fc[i][0][1] > c[2][1] and fc[i][1][1] > c[2][1] or fc[i][0][1] < c[0][1] and fc[i][1][1] < c[0][1]):
+				xr = fc[i][1][0] - fc[i][0][0]
+				yr = fc[i][1][1] - fc[i][0][1]
+				if xr == 0:
+					if (c[0][0] - fc[i][0][0]) * (c[2][0] - fc[i][0][0]) < 0:
 						peresech = True
-					else:
-						last = n
+				elif yr == 0:
+					if (c[0][1] - fc[i][1][1]) * (c[2][1] - fc[i][1][1]) < 0:
+						peresech = True
+				else:
+					m = yr / xr
+					b = fc[i][1][1] - m * fc[i][1][0]
+					last = c[0][1] - m * c[0][0] - b
+					for j in range(1, 4):
+						n = c[j][1] - m * c[j][0] - b
+						if last * n < 0:
+							peresech = True
+							break
+						if last == 0:
+							last = n
 			i += 1
 				
 		return peresech
@@ -178,6 +184,7 @@ class SoftwareRender:
 		ohvat = []
 		peresech = []
 		check = []
+		check_one = []
 		
 		if key[pg.K_RIGHT]:
 			if (len(self.windows) != 0):
@@ -190,15 +197,18 @@ class SoftwareRender:
 					coord = fig.max_min()
 					wcoord = curr_wind.frame_coord()
 
-					if coord[0] > wcoord[1] or coord[1] < wcoord[0] or coord[2] > wcoord[3] or coord[3] < wcoord[2]:	#многоугольник внешний
+					if coord[0] >= wcoord[1] or coord[1] <= wcoord[0] or coord[2] >= wcoord[3] or coord[3] <= wcoord[2]:	#многоугольник внешний
 						n += 1
 					#	out.append(fig)
 					elif coord[0] >= wcoord[0] and coord[1] <= wcoord[1] and coord[2] >= wcoord[2] and coord[3] <= wcoord[3]: #многоугольник внутренний
 						inside.append(fig)
+						check_one.append(fig)
 					elif self.check_peresech(fig, curr_wind): #многоугольник пересекает окно
 						peresech.append(fig)
+						check_one.append(fig)
 					else:
 						check.append(fig)
+						check_one.append(fig)
 					#elif self.check_ohvat(fig, curr_wind): #многоугольник охватывает окно
 					#	ohvat.append(fig)
 					#else: #многоугольник внешний
@@ -208,28 +218,50 @@ class SoftwareRender:
 					i += 1
 				
 				
-				#print('\nКоординаты окна: ', curr_wind.coord())
-				#print('\nВнешние: ', n)
-				##print('\nВнешние: ', len(out), out)
-				##print('\nВнутренние: ', len(inside), inside)
-				##print('\nПересекающие: ', len(peresech), peresech)
+				print('\nКоординаты окна: ', curr_wind.coord())
+				print('\nВнешние: ', n)
+				print('\nВнешние: ', len(out), out)
+				print('\nВнутренние: ', len(inside), inside)
+				print('\nПересекающие: ', len(peresech), peresech)
 				##print('\nОхватывающие: ', len(ohvat), ohvat)
-				#print('\n')
+				print('\n')
 
 				if n == len(self.figures):
 					pg.draw.rect(self.screen, 'white', curr_wind.proj())
 				else:
-					if (curr_wind.size > 1):
-						for wind in curr_wind.div():
-							pg.draw.rect(self.screen, (64, 128, 255), wind.proj(), 1)
-							self.windows.append(wind);
+					if (len(inside) + len(peresech) > 0):
+						if (curr_wind.size > 1):
+							for wind in curr_wind.div():
+								pg.draw.rect(self.screen, (64, 128, 255), wind.proj(), 1)
+								self.windows.append(wind);
+						else:
+							empty = True
+							for fig in check_one:
+								res = self.check_ohvat(fig, curr_wind, 1)
+
+								if res:
+									empty = not res
+									ohvat.append(fig)
+								else:
+									n += 1
+
+							if empty:
+								pg.draw.rect(self.screen, 'white', curr_wind.proj())
+							else:
+								if n == len(self.figures) - 1 and len(ohvat) == 1:
+									pg.draw.rect(self.screen, ohvat[0].color, curr_wind.proj())
+						
+								if len(ohvat) != 0:
+									pg.draw.rect(self.screen, ohvat[0].color, curr_wind.proj())
+
+							#pg.draw.rect(self.screen, peresech[0].color, curr_wind.proj())
 					else:
 						empty = True
 						for fig in check:
 							res = self.check_ohvat(fig, curr_wind, 1)
-							empty = not res
 
 							if res:
+								empty = not res
 								ohvat.append(fig)
 							else:
 								n += 1
@@ -243,9 +275,35 @@ class SoftwareRender:
 							if len(ohvat) != 0:
 								pg.draw.rect(self.screen, ohvat[0].color, curr_wind.proj())
 					
+
+
+					#if (curr_wind.size > 1):
+					#	for wind in curr_wind.div():
+					#		pg.draw.rect(self.screen, (64, 128, 255), wind.proj(), 1)
+					#		self.windows.append(wind);
+					#else:
+					#	empty = True
+					#	for fig in check:
+					#		res = self.check_ohvat(fig, curr_wind, 1)
+					#		empty = not res
+
+					#		if res:
+					#			ohvat.append(fig)
+					#		else:
+					#			n += 1
+
+					#	if empty:
+					#		pg.draw.rect(self.screen, 'white', curr_wind.proj())
+					#	else:
+					#		if n == len(self.figures) - 1 and len(ohvat) == 1:
+					#			pg.draw.rect(self.screen, ohvat[0].color, curr_wind.proj())
 						
-							
-				#time.sleep(0.1)
+					#		if len(ohvat) != 0:
+					#			pg.draw.rect(self.screen, ohvat[0].color, curr_wind.proj())
+					
+						
+				if (curr_wind.size > 128):
+					time.sleep(0.1)
 
 				#if len(inside) == 1:
 				#	pg.draw.rect(self.screen, inside[0].color, curr_wind)
