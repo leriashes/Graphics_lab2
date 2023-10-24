@@ -268,25 +268,20 @@ class SoftwareRender:
 								self.windows.append(wind);
 						#если окно размером с пиксел
 						else:
-							empty = True
-							for fig in check_one:
+							for fig in check:
 								res = self.check_ohvat(fig, curr_wind, 1)
 
 								if res:
-									empty = not res
 									ohvat.append(fig)
 								else:
 									n += 1
 
-							if empty:
-								pg.draw.rect(self.screen, 'white', curr_wind.proj())
+							ohvat += inside + peresech
+							if n == len(self.figures) - 1 and len(ohvat) == 1:
+								pg.draw.rect(self.screen, ohvat[0].color, curr_wind.proj())
 								pg.draw.rect(self.screen, (14, 18, 25), curr_wind.proj(), 1)
-							else:
-								if n == len(self.figures) - 1 and len(ohvat) == 1:
-									pg.draw.rect(self.screen, ohvat[0].color, curr_wind.proj())
-									pg.draw.rect(self.screen, (14, 18, 25), curr_wind.proj(), 1)
-								elif len(ohvat) != 0:
-									self.depth(ohvat, curr_wind)
+							elif len(ohvat) != 0:
+								self.depth(ohvat, curr_wind)
 
 							#pg.draw.rect(self.screen, peresech[0].color, curr_wind.proj()]
 					else:
