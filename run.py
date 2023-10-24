@@ -16,25 +16,28 @@ class SoftwareRender:
 
 		self.windows = []
 		#self.wind_size = [94, 94, 512, 512]
-		self.wind = Window(0, 0, 512)
+		self.wind = Window(0, 0, 32)
 
 		self.figures = [
-			Figure([[150, 60, 30], [286, 45, 0], [53, 10, 6]], 'yellow'),
-			Figure([[100, 200, 20], [225, 200, 20], [300, 300, 20], [225, 400, 20],  [100, 400, 20], [25, 300, 20]], 'lightblue'),
-			Figure([[5, 212, 120], [5, 220, 120], [227, 220, 10], [227, 212, 10]], 'blue'),
-			Figure([[215, 215, 25], [25, 25, 5], [30, 10,5]], 'black'),
-			Figure([[160, 48, 20], [160, 448, 20], [352, 448, 20], [352, 48, 20]], 'orange'),
-			Figure([[80, 192, 10], [80, 320, 10], [432, 320, 10], [432, 192, 10]], 'purple'),
-			Figure([[240, 240, 25], [400, 400, 5], [480, 160, 5]], 'magenta'),
-			Figure([[4, -7, 0], [50, 270, 5], [280, 551, 27]], 'lightgreen')
-			#Figure([[4, -7, 0], [50, 270, 5], [280, 551, 27], [300, 300, 45], [380, 120, 48]], 'yellow'),
+			Figure([[10, 3, 20], [10, 28, 20], [22, 28, 20], [22, 3, 20]], 'red'),
+			Figure([[5, 12, 10], [5, 20, 10], [27, 20, 10], [27, 12, 10]], 'green'),
+			Figure([[15, 15, 25], [25, 25, 5], [30, 10,5]], 'blue')]
+			#Figure([[150, 60, 30], [286, 45, 0], [53, 10, 6]], 'yellow'],
+			#Figure([[100, 200, 20], [225, 200, 20], [300, 300, 20], [225, 400, 20],  [100, 400, 20], [25, 300, 20]], 'lightblue'],
+			#Figure([[5, 212, 120], [5, 220, 120], [227, 220, 10], [227, 212, 10]], 'blue'],
+			#Figure([[215, 215, 25], [25, 25, 5], [30, 10,5]], 'black'],
+			#Figure([[160, 48, 20], [160, 448, 20], [352, 448, 20], [352, 48, 20]], 'orange'],
+			#Figure([[80, 192, 10], [80, 320, 10], [432, 320, 10], [432, 192, 10]], 'purple'],
+			#Figure([[240, 240, 25], [400, 400, 5], [480, 160, 5]], 'magenta'],
+			#Figure([[4, -7, 0], [50, 270, 5], [280, 551, 27]], 'lightgreen']
+			#Figure([[4, -7, 0], [50, 270, 5], [280, 551, 27], [300, 300, 45], [380, 120, 48]], 'yellow'],
 			
-			#Figure([[110, 40, 25], [510, 10, 5], [310, 100, 5], [100, 214, 25], [510, 400, 5], [240, 500, 5]], 'red'),
-			#Figure([[10, 240, 25], [50, 100, 5], [320, 10, 5], [500, 24, 25], [510, 400, 5], [240, 500, 5]], 'lime')
-#			(10, 3, 20), (20, 28, 20), (22, 28, 20), (22, 3, 20)
-#2: (5, 12, 10), (5, 20, 10), (27, 20, !0), (27, 12, 20)
-#3: (15, 15, 25), (25, 25, 5), (30, 10,5)
-			]
+			#Figure([[110, 40, 25], [510, 10, 5], [310, 100, 5], [100, 214, 25], [510, 400, 5], [240, 500, 5]], 'red'],
+			#Figure([[10, 240, 25], [50, 100, 5], [320, 10, 5], [500, 24, 25], [510, 400, 5], [240, 500, 5]], 'lime']
+#			(10, 3, 20], (20, 28, 20], (22, 28, 20], (22, 3, 20]
+#2: (5, 12, 10], (5, 20, 10], (27, 20, !0], (27, 12, 20]
+#3: (15, 15, 25], (25, 25, 5], (30, 10,5]
+			
 	   
 	def depth(self, ohvat, win):
 		ready  = True
@@ -57,6 +60,7 @@ class SoftwareRender:
 
 		if ready:
 			pg.draw.rect(self.screen, ohvat[n].color, win.proj())
+			pg.draw.rect(self.screen, (14, 18, 25), win.proj(), 1)
 
 		return ready
 
@@ -169,9 +173,9 @@ class SoftwareRender:
 				
 				f.vertexes.insert(i + 1, d)
 				#if ang[i] == 5 or ang[i] == 1:
-				#	f.vertexes.insert(i + 1, [tx1 + (y1 - ty1) * (tx2 - tx1) / (ty2 -ty1), y1])
+				#	f.vertexes.insert(i + 1, [tx1 + (y1 - ty1] * (tx2 - tx1] / (ty2 -ty1], y1]]
 				#else:
-				#	f.vertexes.insert(i + 1, [tx1 + (y2 - ty1) * (tx2 - tx1) / (ty2 -ty1), y2])
+				#	f.vertexes.insert(i + 1, [tx1 + (y2 - ty1] * (tx2 - tx1] / (ty2 -ty1], y2]]
 				return self.check_ohvat(f, wind, r + 1)
 
 			s += a
@@ -183,22 +187,22 @@ class SoftwareRender:
 
 		pg.draw.rect(self.screen, (64, 128, 255), 
 				 [92, 92, 516, 516], 2)
-		#pg.draw.rect(self.screen, 'red', self.wind.proj())
+		#pg.draw.rect(self.screen, 'red', self.wind.proj()]
 
 
 		for figure in self.figures:
 			pg.draw.polygon(self.screen, 'black', figure.proj(), 1)
 
 		#pg.draw.polygon(self.screen, 'black', [[244, 60], [380, 100], 
-		#			 [290, 140], [230, 80]], 1)
+		#			 [290, 140], [230, 80]], 1]
 
 		#pg.draw.polygon(self.screen, 'black', [[244, 250], [780, 100], 
-		#			 [730, 780]], 1)
+		#			 [730, 780]], 1]
 
 		#pg.draw.polygon(self.screen, 'black', [[220, 250], [220, 790], 
-		#			 [830, 790], [830, 250]], 1)
+		#			 [830, 790], [830, 250]], 1]
 
-		#self.windows.append(self.wind_size);
+		#self.windows.append(self.wind_size];
 		self.windows.append(self.wind);
 
 	def control(self):
@@ -223,7 +227,7 @@ class SoftwareRender:
 
 					if coord[0] >= wcoord[1] or coord[1] <= wcoord[0] or coord[2] >= wcoord[3] or coord[3] <= wcoord[2]:	#многоугольник внешний
 						n += 1
-					#	out.append(fig)
+						out.append(fig)
 					elif coord[0] >= wcoord[0] and coord[1] <= wcoord[1] and coord[2] >= wcoord[2] and coord[3] <= wcoord[3]: #многоугольник внутренний
 						inside.append(fig)
 						check_one.append(fig)
@@ -233,11 +237,11 @@ class SoftwareRender:
 					else:
 						check.append(fig)
 						check_one.append(fig)
-					#elif self.check_ohvat(fig, curr_wind): #многоугольник охватывает окно
-					#	ohvat.append(fig)
+					#elif self.check_ohvat(fig, curr_wind]: #многоугольник охватывает окно
+					#	ohvat.append(fig]
 					#else: #многоугольник внешний
 					#	n += 1
-					#	out.append(fig)
+					#	out.append(fig]
 						
 					i += 1
 				
@@ -248,16 +252,21 @@ class SoftwareRender:
 				print('\nВнутренние: ', len(inside), inside)
 				print('\nПересекающие: ', len(peresech), peresech)
 				##print('\nОхватывающие: ', len(ohvat), ohvat)
-				print('\n')
+				print('------------------')
 
+				#если все фигуры внешние
 				if n == len(self.figures):
 					pg.draw.rect(self.screen, 'white', curr_wind.proj())
+					pg.draw.rect(self.screen, (14, 18, 25), curr_wind.proj(), 1)
 				else:
+					#если есть фигуры внутренние или пересекающие
 					if (len(inside) + len(peresech) > 0):
+						#если размер окна больше 1
 						if (curr_wind.size > 1):
 							for wind in curr_wind.div():
 								pg.draw.rect(self.screen, (64, 128, 255), wind.proj(), 1)
 								self.windows.append(wind);
+						#если окно размером с пиксел
 						else:
 							empty = True
 							for fig in check_one:
@@ -271,17 +280,15 @@ class SoftwareRender:
 
 							if empty:
 								pg.draw.rect(self.screen, 'white', curr_wind.proj())
+								pg.draw.rect(self.screen, (14, 18, 25), curr_wind.proj(), 1)
 							else:
 								if n == len(self.figures) - 1 and len(ohvat) == 1:
 									pg.draw.rect(self.screen, ohvat[0].color, curr_wind.proj())
+									pg.draw.rect(self.screen, (14, 18, 25), curr_wind.proj(), 1)
 								elif len(ohvat) != 0:
-									if not self.depth(ohvat, curr_wind):
-										if (curr_wind.size > 1):
-											for wind in curr_wind.div():
-												pg.draw.rect(self.screen, (64, 128, 255), wind.proj(), 1)
-												self.windows.append(wind);
+									self.depth(ohvat, curr_wind)
 
-							#pg.draw.rect(self.screen, peresech[0].color, curr_wind.proj())
+							#pg.draw.rect(self.screen, peresech[0].color, curr_wind.proj()]
 					else:
 						empty = True
 						for fig in check:
@@ -295,9 +302,11 @@ class SoftwareRender:
 
 						if empty:
 							pg.draw.rect(self.screen, 'white', curr_wind.proj())
+							pg.draw.rect(self.screen, (14, 18, 25), curr_wind.proj(), 1)
 						else:
 							if n == len(self.figures) - 1 and len(ohvat) == 1:
 								pg.draw.rect(self.screen, ohvat[0].color, curr_wind.proj())
+								pg.draw.rect(self.screen, (14, 18, 25), curr_wind.proj(), 1)
 							elif len(ohvat) != 0:
 								if not self.depth(ohvat, curr_wind):
 									if (curr_wind.size > 1):
@@ -306,38 +315,42 @@ class SoftwareRender:
 											self.windows.append(wind);
 								#pg.draw.rect(self.screen, ohvat[0].color, curr_wind.proj())
 					
+					
+					print('\nВнешние: ', len(check) - len(out) + len(ohvat), check)
+					print('\nОхватывающие: ', len(ohvat), ohvat)
+					print('\n')
+					print('\n')
 
-
-					#if (curr_wind.size > 1):
-					#	for wind in curr_wind.div():
-					#		pg.draw.rect(self.screen, (64, 128, 255), wind.proj(), 1)
-					#		self.windows.append(wind);
+					#if (curr_wind.size > 1]:
+					#	for wind in curr_wind.div(]:
+					#		pg.draw.rect(self.screen, (64, 128, 255], wind.proj(], 1]
+					#		self.windows.append(wind];
 					#else:
 					#	empty = True
 					#	for fig in check:
-					#		res = self.check_ohvat(fig, curr_wind, 1)
+					#		res = self.check_ohvat(fig, curr_wind, 1]
 					#		empty = not res
 
 					#		if res:
-					#			ohvat.append(fig)
+					#			ohvat.append(fig]
 					#		else:
 					#			n += 1
 
 					#	if empty:
-					#		pg.draw.rect(self.screen, 'white', curr_wind.proj())
+					#		pg.draw.rect(self.screen, 'white', curr_wind.proj(]]
 					#	else:
-					#		if n == len(self.figures) - 1 and len(ohvat) == 1:
-					#			pg.draw.rect(self.screen, ohvat[0].color, curr_wind.proj())
+					#		if n == len(self.figures] - 1 and len(ohvat] == 1:
+					#			pg.draw.rect(self.screen, ohvat[0].color, curr_wind.proj(]]
 						
-					#		if len(ohvat) != 0:
-					#			pg.draw.rect(self.screen, ohvat[0].color, curr_wind.proj())
+					#		if len(ohvat] != 0:
+					#			pg.draw.rect(self.screen, ohvat[0].color, curr_wind.proj(]]
 					
 						
 				if (curr_wind.size > 0):
 					time.sleep(0.1)
 
-				#if len(inside) == 1:
-				#	pg.draw.rect(self.screen, inside[0].color, curr_wind)
+				#if len(inside] == 1:
+				#	pg.draw.rect(self.screen, inside[0].color, curr_wind]
 
 	def run(self):
 		pg.display.set_caption('Лабораторная работа 2')

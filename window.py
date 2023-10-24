@@ -5,7 +5,7 @@ class Window():
 		self.size = size
 
 	def proj(self):
-		return [self.x + 94, 606 - self.y - self.size, self.size, self.size]
+		return [self.x * 16 + 94, 606 - self.y * 16 - self.size * 16, self.size * 16, self.size * 16]
 
 	def frame_coord(self):
 		return [self.x, self.x + self.size,  self.y, self.y + self.size]

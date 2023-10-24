@@ -36,8 +36,8 @@ class Figure:
 		for i in range(len(self.vertexes)):
 			res.append([])
 			
-			res[i].append(self.vertexes[i][0] + 94)
-			res[i].append(605 - self.vertexes[i][1])
+			res[i].append(self.vertexes[i][0] * 16 + 94)
+			res[i].append(605 - self.vertexes[i][1] * 16)
 
 			v.append(res[i].copy())
 			
