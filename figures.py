@@ -61,22 +61,6 @@ class Figure:
 		return res
 
 	def max_min(self):
-		#coord = self.proj()
-
-		#x_min = coord[0][0]
-		#x_max = coord[0][0]
-		#y_min = coord[0][1]
-		#y_max = coord[0][1]
-
-		#for i in range(len(coord)):
-		#	if (coord[i][0] < x_min):
-		#		x_min = coord[i][0]
-		#	if (coord[i][0] > x_max):
-		#		x_max = coord[i][0]
-		#	if (coord[i][1] < y_min):
-		#		y_min = coord[i][1]
-		#	if (coord[i][1] > y_max):
-		#		y_max = coord[i][1]
 
 		x_min = self.vertexes[0][0]
 		x_max = self.vertexes[0][0]
